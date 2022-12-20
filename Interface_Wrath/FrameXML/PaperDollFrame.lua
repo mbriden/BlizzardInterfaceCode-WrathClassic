@@ -2214,9 +2214,9 @@ function GearManagerDialog_Update ()
 	local selectedName = dialog.selectedSetName;
 	local name, texture, button;
 	dialog.selectedSet = nil;
-	for i = 0, numSets do
+	for ite, i in ipairs(C_EquipmentSet.GetEquipmentSetIDs()) do
 		name, texture = C_EquipmentSet.GetEquipmentSetInfo(i);
-		button = buttons[i+1];
+		button = buttons[ite];
 		button:Enable();
 		button.name = name;
 		button.id = i; --EquipmentSetID
@@ -2368,6 +2368,7 @@ end
 -- Handles scrolling to the icon selected, and pushing equipment to the front of the icon list 
 function RecalculateGearManagerDialogPopup()
 	local popup = GearManagerDialogPopup;
+	RefreshEquipmentSetIconInfo();
 	local selectedSet = GearManagerDialog.selectedSet;
 	if ( selectedSet ) then
 		-- Try to find index of the icon
@@ -2390,7 +2391,6 @@ function RecalculateGearManagerDialogPopup()
 	To do this, we need to find the current set (by icon) and move the offset of the GearManagerDialogPopup
 	to display it.
 	]]
-	RefreshEquipmentSetIconInfo();
 	_TotalItems = #iconsTable + _numItems; -- Icons plus unique equipment
 	_specialIcon = nil;
 	local texture;
